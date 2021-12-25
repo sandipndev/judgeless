@@ -11,7 +11,7 @@ import Logo from "../public/logo-animated.gif"
 const Home: NextPage = () => {
   const login = async () => {
     const provider = new firebase.auth.GoogleAuthProvider();
-    await firebase.auth().signInWithPopup(provider)
+    await firebase.auth().signInWithRedirect(provider)
   };
 
   return (
