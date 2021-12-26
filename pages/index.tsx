@@ -15,7 +15,7 @@ const Home: NextPage = () => {
   };
 
   return (
-    <header className="container">
+    <header className="w-screen flex flex-col justify-center items-center space-y-4">
       <Image src={Logo} alt="Logo" />
       <Quote body="Don't be afraid. Be focused. Be determined. Be hopeful. Be empowered." by="Michelle Obama" title="Focus" />
       <button className="btn" onClick={login}>
