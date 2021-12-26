@@ -15,4 +15,17 @@ model User {
   email       String
   displayName String
   photoURL    String
+  posts       Post[]
+}
+
+model Post {
+  id        String  @id @default(cuid())
+  anonymous Boolean @default(false)
+  title     String
+  body      String // Markdown
+
+  // Anonymous user still needs to be linked so that
+  // it can be shown on the user's wall
+  authorId String
+  author   User   @relation(fields: [authorId], references: [id])
 }
