@@ -6,6 +6,7 @@ import {
   AuthAction,
   withAuthUserTokenSSR,
 } from 'next-firebase-auth'
+import FullPageLoader from '../components/FullPageLoader'
 
 const Home: NextPage = () => {
   const user = useAuthUser()
@@ -27,5 +28,7 @@ const Home: NextPage = () => {
 export const getServerSideProps = withAuthUserTokenSSR()()
 
 export default withAuthUser({
+  LoaderComponent: FullPageLoader,
   whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN,
+  whenUnauthedBeforeInit: AuthAction.SHOW_LOADER,
 })(Home)
