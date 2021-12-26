@@ -1,11 +1,12 @@
 import type { NextPage } from 'next'
 import Image from 'next/image'
-import { withAuthUser, AuthAction } from 'next-firebase-auth'
+import { withAuthUser, AuthAction, withAuthUserTokenSSR } from 'next-firebase-auth'
 
 import firebase from 'firebase/app'
 import 'firebase/auth'
 
 import Quote from '../components/Quote'
+import FullPageLoader from '../components/FullPageLoader'
 import Logo from "../public/logo-animated.gif"
 
 const Home: NextPage = () => {
@@ -25,8 +26,11 @@ const Home: NextPage = () => {
   )
 }
 
+export const getServerSideProps = withAuthUserTokenSSR()()
+
 export default withAuthUser({
+  LoaderComponent: FullPageLoader,
   whenAuthed: AuthAction.REDIRECT_TO_APP,
-  whenUnauthedBeforeInit: AuthAction.RETURN_NULL,
+  whenUnauthedBeforeInit: AuthAction.SHOW_LOADER,
   whenUnauthedAfterInit: AuthAction.RENDER,
 })(Home)
