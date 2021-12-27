@@ -10,10 +10,11 @@ type Post = {
 }
 
 type CreatePostProps = {
+  className?: string
   onCreate?: (post: Post) => Promise<void> | void
 }
 
-const CreatePost: NextPage<CreatePostProps> = ({ onCreate = () => { } }) => {
+const CreatePost: NextPage<CreatePostProps> = ({ className = "", onCreate = () => { } }) => {
   const user = useAuthUser();
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -48,7 +49,7 @@ const CreatePost: NextPage<CreatePostProps> = ({ onCreate = () => { } }) => {
   }
 
   return (
-    <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={createPost}>
+    <form className={"bg-white shadow-md rounded-xl px-8 pt-6 pb-8 mb-4 " + className} onSubmit={createPost}>
       <div className="text-xl text-gray-700 mb-1 font-bold">Create Post</div>
       <hr className="mb-6" />
       <div className="mb-4">
