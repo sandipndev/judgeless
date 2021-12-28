@@ -12,7 +12,7 @@ const ProfileHeader: NextPage = () => {
   return (
     <>
       <header
-        className="flex flex-row items-center justify-center md:justify-between px-4 fixed w-screen"
+        className="flex flex-row items-center justify-center md:justify-between px-4 fixed w-screen z-10"
         style={{ backgroundColor: "#1f1b1c" }}
       >
         <Image height="80" width="300" src={Logo} alt="Judgeless Logo" />

@@ -4,6 +4,8 @@ import { withAuthUser, AuthAction } from 'next-firebase-auth'
 import FullPageLoader from '../components/FullPageLoader'
 import CreatePost from '../components/CreatePost'
 import ProfileHeader from '../components/ProfileHeader'
+import Posts from '../components/Posts'
+import PostsContextProvider from '../context/posts'
 
 const Home: NextPage = () => {
 
@@ -12,7 +14,10 @@ const Home: NextPage = () => {
       <ProfileHeader />
       <main className="pt-20 px-8 md:grid grid-cols-5">
         <div className="col-start-2 col-span-2">
-          <CreatePost />
+          <PostsContextProvider>
+            <CreatePost />
+            <Posts />
+          </PostsContextProvider>
         </div>
         <div className="col-start-5">
           {/* Therapists */}

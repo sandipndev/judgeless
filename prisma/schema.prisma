@@ -19,10 +19,10 @@ model User {
 }
 
 model Post {
-  id        String  @id @default(cuid())
-  anonymous Boolean @default(false)
-  title     String
+  id        String   @id @default(cuid())
+  anonymous Boolean  @default(false)
   body      String // Markdown
+  createdAt DateTime @default(now())
 
   // Anonymous user still needs to be linked so that
   // it can be shown on the user's wall
