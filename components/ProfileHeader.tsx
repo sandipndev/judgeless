@@ -20,9 +20,9 @@ const ProfileHeader: NextPage = () => {
           {user.photoURL && <Image className="rounded-full" height="30" width="30" src={user.photoURL} alt={user.displayName + "'s photo"} />}
           <p className="font-semibold text-sm">{user.displayName}</p>
         </button>
-        <div className="md:hidden absolute right-4">
+        <button onClick={() => setShowProfileMenu(s => !s)} className="md:hidden absolute right-4">
           {user.photoURL && <Image className="rounded-full" height="35" width="35" src={user.photoURL} alt={user.displayName + "'s photo"} />}
-        </div>
+        </button>
         {showProfileMenu &&
           <div className="absolute right-4 md:right-12 top-16">
             <button className="btn" onClick={user.signOut}>Sign out</button>
