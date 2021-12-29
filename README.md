@@ -1,34 +1,72 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+![](./public/logo.jpg)
 
-## Getting Started
+> Discuss freely and openly. Find your therapist today. Stay Judgeless!
 
-First, run the development server:
+---
+
+![](https://img.shields.io/badge/Work-In%20Progress-green)
+
+
+### Motivation
+This project was made during the times of the Coronavirus Pandemic which caused several people to not just lose their jobs but lose touch of their friends and had to be homestruck 24x7.
+This caused significant depression amidst many, which got us thinking about what are the ways to really overcome this taboo subject.
+With research and our personal observations, we think speaking one's heart out is probably the best way to really solve depression.
+Sometimes, we just want to share our burden and hope that the person listening would console us and give us wisdom to cope with our situation.
+Our application is a platform which makes this possible, and in case things get serious, also has always available therapists in one-click!
+
+### Features
+
+- [x] Login/Signup with Google
+- [x] Post anonymously
+- [ ] Post with pictures
+- [ ] Likes and Comments on Posts
+- [ ] Home Post News Feed
+- [ ] Therapist Onboarding
+- [ ] Chat with Therapists
+- [ ] Reporting of therapists
+- [ ] User interaction based post recommendation
+- [ ] Feed should have atleast 5 positive posts on top
+- [ ] End to End Encryption on chats (Needs persistent client)
+- [ ] Truly anonymous posts over Tor & without login
+
+### Development
+
+#### Prerequisites
+
+- [Docker](https://www.docker.com/get-started)
+- [Docker Compose](https://docs.docker.com/compose/install/) with [V2 Compose Switch](https://docs.docker.com/compose/cli-command/#compose-switch)
+- [Firebase Project](https://console.firebase.google.com)
+- Bash environment
+
+#### Running Locally
+
+You should add a `.env.local` file in the root folder of this codebase, cloned locally. 
+The file should look like the [.env.local.example](./.env.local.example) in the root of this project.
+You will need to add in all the variables in this new local file.
+Treat this file as secret and never commit it to your code repository. Therefore, it has been gitignored by default.
+
+From Firebase:
+- Enable Google Authentication
+- Create a Web App and replace API Credentials in `.env.local`
+- Create a Firebase Admin Service Account and replace credentials in `.env.local`
+
+Once this has been done, you can perform:
 
 ```bash
-npm run dev
-# or
+make services
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This is going to run the `next` watch server on port 3000 and [http://localhost:3000](http://localhost:3000) should be running Judgeless with your Firebase Credentials!
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+#### Production Usage
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+This is currently WIP, docs will be available soon.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+### Contributing
 
-## Learn More
+Contributions are welcome, we would love to have more hands on this project. Use the general workflow of Forking and Creating a PR.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Made with [Next.js](https://nextjs.org/) and Caffeine, by a group of enthusiastic students from [Academy Of Technology](https://aot.edu.in) as a part of their Final Year Project. ☕
