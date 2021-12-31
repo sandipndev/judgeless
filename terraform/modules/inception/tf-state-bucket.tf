@@ -71,8 +71,8 @@ data "google_iam_policy" "tf_state_access" {
       ]
 
       condition {
-        title      = "${local.name_prefix}/galoy"
-        expression = "resource.name.startsWith(\"projects/_/buckets/${google_storage_bucket.tf_state.name}/objects/${local.name_prefix}/galoy\")"
+        title      = "${local.name_prefix}/judgeless"
+        expression = "resource.name.startsWith(\"projects/_/buckets/${google_storage_bucket.tf_state.name}/objects/${local.name_prefix}/judgeless\")"
       }
     }
   }
