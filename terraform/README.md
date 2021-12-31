@@ -11,6 +11,14 @@ The lifecycle looks as follows:
 3. [Platform](./modules/platform) - Provisions the GKE cluster itself
 4. [Services](./modules/services) - Deploys the [ingress-nginx](https://github.com/kubernetes/ingress-nginx) and [cert-manager](https://cert-manager.io/docs/) charts onto the K8s cluster - followed by [Judgeless](../charts) charts.
 
+The environments are in the [env](./env) folder, which contain the deployment structure for each of the environments. 
+They are what get picked on in CI.
+
+- [prod](./env/prod) - The only environment which we have currently
+
+Testing and staging environments will be worked upon later when the project is more or less working with all the components and with active users. 
+In such a situation, the rollout must be in stages, with code flowing from GitHub to testing, followed by staging and production.
+
 ---
 
 Inspiration for infrastructure taken from [GaloyMoney/galoy-infra](https://github.com/GaloyMoney/galoy-infra)
