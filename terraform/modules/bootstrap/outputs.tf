@@ -1,3 +1,9 @@
+output "gcp_project" {
+  value = local.project
+}
+output "name_prefix" {
+  value = local.name_prefix
+}
 output "inception_sa" {
   value = google_service_account.inception.email
 }
