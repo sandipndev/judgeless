@@ -19,6 +19,18 @@ They are what get picked on in CI.
 Testing and staging environments will be worked upon later when the project is more or less working with all the components and with active users. 
 In such a situation, the rollout must be in stages, with code flowing from GitHub to testing, followed by staging and production.
 
+#### Environment rollout procedure TL;DR
+
+```bash
+make bootstrap
+make prep-inception USERS='["user:email@gmail.com",...]'
+export GOOGLE_CREDENTIALS=$(cat inception-sa-creds.json)
+make inception
+make prep-platform
+make platform
+unset GOOGLE_CREDENTIALS
+```
+
 ---
 
 Inspiration for infrastructure taken from [GaloyMoney/galoy-infra](https://github.com/GaloyMoney/galoy-infra)

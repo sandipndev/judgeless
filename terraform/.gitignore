@@ -36,3 +36,14 @@ override.tf.json
 # Ignore CLI configuration files
 .terraformrc
 terraform.rc
+
+# ---- Judgeless Specific ----
+
+# Ignore terraform bucket config
+terraform.tf
+
+# Ignore User list
+users.auto.tfvars.json
+
+# Inception Credentials
+inception-sa-creds.json

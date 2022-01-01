@@ -1,10 +1,12 @@
 variable "gcp_project" {}
+variable "name_prefix" { default = "judgeless" }
 variable "tf_state_bucket_force_destroy" { default = false }
 
 module "bootstrap" {
   source = "../../../modules/bootstrap"
 
   gcp_project                   = var.gcp_project
+  name_prefix                   = var.name_prefix
   tf_state_bucket_force_destroy = var.tf_state_bucket_force_destroy
 }
 

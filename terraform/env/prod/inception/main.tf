@@ -3,17 +3,10 @@ variable "name_prefix" {}
 variable "inception_sa" {}
 variable "tf_state_bucket_name" {}
 variable "tf_state_bucket_location" {}
-variable "users" {
-  type = list(object({
-    id        = string
-    inception = bool
-    platform  = bool
-    logs      = bool
-  }))
-}
+variable "users" {}
 
 module "inception" {
-  source = "../../../modules/inception/gcp"
+  source = "../../../modules/inception"
 
   gcp_project              = var.gcp_project
   name_prefix              = var.name_prefix
@@ -21,7 +14,7 @@ module "inception" {
   tf_state_bucket_name     = var.tf_state_bucket_name
   tf_state_bucket_location = var.tf_state_bucket_location
 
-  users = var.users
+  users = try(jsondecode(var.users), [])
 }
 
 output "bastion_ip" {
