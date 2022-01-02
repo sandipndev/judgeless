@@ -18,25 +18,50 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: google-github-actions/setup-gcloud@v0
+      - uses: google-github-actions/setup-gcloud@master
+
+      - name: Setup Env
+        run: |
+          cat <<EOF > .env.local
+
+          # Firebase WebApp
+          NEXT_PUBLIC_FIREBASE_PUBLIC_API_KEY="${{ secrets.NEXT_PUBLIC_FIREBASE_PUBLIC_API_KEY }}"
+          NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN="${{ secrets.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN }}"
+          NEXT_PUBLIC_FIREBASE_DATABASE_URL="${{ secrets.NEXT_PUBLIC_FIREBASE_DATABASE_URL }}"
+          NEXT_PUBLIC_FIREBASE_PROJECT_ID="${{ secrets.NEXT_PUBLIC_FIREBASE_PROJECT_ID }}"
+
+          # Firebase Admin
+          FIREBASE_CLIENT_EMAIL=""
+          # Private Key must be wrapped in quotes(") and parsed using JSON.parse
+          # on the app itself. This is because of the way Vercel stores env variables.
+          # Refer: https://github.com/vercel/vercel/issues/749#issuecomment-707515089
+          FIREBASE_PRIVATE_KEY='""'
+
+          # Secrets used to sign cookies
+          COOKIE_SECRET_CURRENT=""
+          COOKIE_SECRET_PREVIOUS=""
+
+          # Cookie options
+          NEXT_PUBLIC_COOKIE_SECURE=${{ secrets.NEXT_PUBLIC_COOKIE_SECURE }}
+
+          # Database
+          DATABASE_URL=""
+
+          EOF
+
+      - name: Build and Push
+        uses: RafikFarhad/push-to-gcr-github-action@v4
         with:
-          service_account_key: ${{ secrets.INCEPTION_SA_CREDS }}
+          gcloud_service_key: ${{ secrets.INCEPTION_SA_CREDS }}
+          registry: us.gcr.io
           project_id: ${{ secrets.GCP_PROJECT }}
-          export_default_credentials: true
-
-      # Build docker image
-      - name: Build
-        run: |
-          docker build -t us.gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA .
-
-      - name: Push
-        run: |
-          gcloud auth configure-docker -q
-          docker push us.gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA
+          image_name: judgeless
 
   deploy:
+    name: Deploy to GCP/GKE
     runs-on: ubuntu-latest
     needs: build
+
     steps:
       - uses: actions/checkout@v2
 
