@@ -6,16 +6,22 @@ pushd bootstrap
 
 terraform output > ../inception/terraform.tfvars
 
-inception_email=$(terraform output inception_sa | jq -r)
+if [[ $2 != "" ]]; then
+  echo "inception_sa = \"$2\"" >> ../inception/terraform.tfvars
+fi
+
+inception_email=${2:-$(terraform output inception_sa | jq -r)}
 tf_state_bucket_name=$(terraform output tf_state_bucket_name | jq -r)
 name_prefix=$(terraform output name_prefix | jq -r)
 
 popd
 
-gcloud iam service-accounts keys create inception-sa-creds.json \
+if [[ $GOOGLE_CREDENTIALS == "" ]]; then
+  gcloud iam service-accounts keys create inception-sa-creds.json \
   --iam-account=${inception_email}
 
-export GOOGLE_CREDENTIALS=$(cat inception-sa-creds.json)
+  export GOOGLE_CREDENTIALS=$(cat inception-sa-creds.json)
+fi
 
 pushd inception
 

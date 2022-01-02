@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Bootstrap
+      - name: Deploy
         run: |
           cd terraform/env/prod
 
@@ -30,23 +30,9 @@ jobs:
           terraform refresh
           popd
 
-          make prep-inception USERS=${{ secrets.USERS_ARRAY }}
+          make prep-inception USERS=${{ secrets.USERS_ARRAY }} INCEPTION_EMAIL=${{ secrets.INCEPTION_EMAIL }}
 
-      - name: Inception
-        run: |
-          cd terraform/env/prod
-          export GOOGLE_CREDENTIALS=$(cat inception-sa-creds.json)
           echo yes | make inception
-
-      - name: Platform
-        run: |
-          cd terraform/env/prod
-          export GOOGLE_CREDENTIALS=$(cat inception-sa-creds.json)
           echo yes | make prep-platform
           echo yes | make platform
-
-      - name: Services
-        run: |
-          cd terraform/env/prod
-          export GOOGLE_CREDENTIALS=$(cat inception-sa-creds.json)
           echo yes | make services

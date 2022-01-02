@@ -6,7 +6,7 @@ bootstrap:
 		&& $(TF) apply
 
 prep-inception:
-	../../../scripts/prep-inception.sh '$(USERS)'
+	../../../scripts/prep-inception.sh '$(USERS)' '$(INCEPTION_EMAIL)'
 
 inception:
 	cd inception \
