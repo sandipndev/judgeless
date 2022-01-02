@@ -5,8 +5,38 @@ on:
   workflow_dispatch:
 
 jobs:
+  build: 
+    name: Build image
+    runs-on: ubuntu-latest
+
+    env:
+      HASH: $(git rev-parse --short "$GITHUB_SHA")
+      BRANCH: ${GITHUB_REF##*/}
+      SERVICE_NAME: ${{ secrets.NAME_PREFIX }}
+      PROJECT_ID: ${{ secrets.GCP_PROJECT }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: google-github-actions/setup-gcloud@v0
+        with:
+          service_account_key: ${{ secrets.INCEPTION_SA_CREDS }}
+          project_id: ${{ secrets.GCP_PROJECT }}
+          export_default_credentials: true
+
+      # Build docker image
+      - name: Build
+        run: |
+          docker build -t us.gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA .
+
+      - name: Push
+        run: |
+          gcloud auth configure-docker -q
+          docker push us.gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA
+
   deploy:
     runs-on: ubuntu-latest
+    needs: build
     steps:
       - uses: actions/checkout@v2
 
