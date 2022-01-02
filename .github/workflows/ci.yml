@@ -1,0 +1,47 @@
+name: Deploy
+on: 
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Bootstrap
+        run: |
+          cd terraform/env/prod
+
+          cat <<EOF > inception-sa-creds.json
+          ${{ secrets.INCEPTION_SA_CREDS }}
+          EOF
+
+          export GOOGLE_CREDENTIALS=$(cat inception-sa-creds.json)
+
+          cat <<EOF > bootstrap/terraform.tfvars
+          gcp_project = "${{ secrets.GCP_PROJECT }}"
+          name_prefix = "${{ secrets.NAME_PREFIX }}"
+          EOF
+
+          make bootstrap # Just to get outputs
+          make prep-inception USERS=${{ secrets.USERS_ARRAY }}
+
+          export GOOGLE_CREDENTIALS=$(cat inception-sa-creds.json)
+
+      - name: Inception
+        run: |
+          cd terraform/env/prod
+          make inception
+
+      - name: Platform
+        run: |
+          cd terraform/env/prod
+          make prep-platform
+          make platform
+
+      - name: Services
+        run: |
+          cd terraform/env/prod
+          make services

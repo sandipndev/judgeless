@@ -1,6 +1,6 @@
 resource "helm_release" "judgeless" {
   name       = "judgeless"
-  chart      = "${path.module}/../../../chart"
+  chart      = "${path.module}/../../../charts"
   repository = "https://sandipndev.github.io/judgeless/charts/"
 
   depends_on = [

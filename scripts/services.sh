@@ -67,7 +67,7 @@ ADDITIONAL_SSH_OPTS=${ADDITIONAL_SSH_OPTS:-"-i $(pwd)/id_rsa -o StrictHostKeyChe
 
 echo "Syncing to bastion"
 rsync --exclude '**/.terraform/**' --exclude '**.terrafor*' -avr -e "ssh -l ${BASTION_USER} ${ADDITIONAL_SSH_OPTS}" \
-  ${REPO_ROOT}/terraform ${bastion_ip}:${REPO_ROOT_DIR}
+  ${REPO_ROOT}/terraform ${REPO_ROOT}/charts ${bastion_ip}:${REPO_ROOT_DIR}
 
 set +e
 for i in {1..60}; do
