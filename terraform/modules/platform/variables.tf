@@ -30,7 +30,7 @@ locals {
   min_default_node_count    = var.min_default_node_count
   max_default_node_count    = var.max_default_node_count
 
-  postgres_tier           = var.postgres_tier
-  destroyable_postgres    = var.destroyable_postgres
-  shared_pg_instance_name = "${local.name_prefix}-shared-pg"
+  postgres_tier        = var.postgres_tier
+  destroyable_postgres = var.destroyable_postgres
+  pg_instance_name     = "${local.name_prefix}-pg"
 }

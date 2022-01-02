@@ -1,6 +1,7 @@
 locals {
   apis = [
     "iam.googleapis.com",
+    "firebase.googleapis.com",
     "cloudresourcemanager.googleapis.com",
     "compute.googleapis.com",
     "container.googleapis.com",

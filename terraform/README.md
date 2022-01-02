@@ -22,12 +22,25 @@ In such a situation, the rollout must be in stages, with code flowing from GitHu
 #### Environment rollout procedure TL;DR
 
 ```bash
+# Bootstrap phase
+gcloud auth application-default login
 make bootstrap
+
+# Inception Phase
+# Users mentioned here get access to inception, platform as well as logs
 make prep-inception USERS='["user:email@gmail.com",...]'
 export GOOGLE_CREDENTIALS=$(cat inception-sa-creds.json)
 make inception
+
+# Platform Phase
 make prep-platform
 make platform
+
+# Sync with Bastion Phase
+make services
+
+# Cleanup
+rm id_rsa id_rsa.pub
 unset GOOGLE_CREDENTIALS
 ```
 

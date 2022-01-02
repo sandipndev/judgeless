@@ -47,3 +47,7 @@ users.auto.tfvars.json
 
 # Inception Credentials
 inception-sa-creds.json
+
+# Server Keys
+id_rsa
+id_rsa.pub

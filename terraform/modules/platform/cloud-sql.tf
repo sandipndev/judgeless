@@ -21,7 +21,7 @@ resource "random_id" "db_name_suffix" {
 }
 
 resource "google_sql_database_instance" "instance" {
-  name = "${local.shared_pg_instance_name}-${random_id.db_name_suffix.hex}"
+  name = "${local.pg_instance_name}-${random_id.db_name_suffix.hex}"
 
   project             = local.project
   database_version    = "POSTGRES_13"
@@ -52,7 +52,7 @@ resource "random_password" "admin" {
 }
 
 resource "google_sql_user" "admin" {
-  name     = "${local.shared_pg_instance_name}-admin"
+  name     = "${local.pg_instance_name}-admin"
   instance = google_sql_database_instance.instance.name
   password = random_password.admin.result
   project  = local.project

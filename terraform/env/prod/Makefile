@@ -19,21 +19,23 @@ platform:
 	cd platform \
 		&& $(TF) apply
 
+services:
+	../../../scripts/services.sh
+
+initial-services:
+	cd services \
+		&& $(TF) init \
+		&& $(TF) apply -target module.services.helm_release.cert_manager
+
+judgeless-services:
+	cd services \
+		&& $(TF) apply
+
 # For debugging
 clean:
 	find . | grep terra | grep -v "./bootstrap/terraform.tfvars" | xargs rm -rf
 	find . | grep tfstate | grep -v "./bootstrap/terraform.tfvars" | xargs rm -rf
 	find . | grep tfvars | grep -v "./bootstrap/terraform.tfvars" | xargs rm -rf
-	rm inception-sa-creds.json
+	rm id_rsa id_rsa.pub inception-sa-creds.json
 
-recreate-project:
-	echo Y | gcloud projects delete judgeless-testing-$(NOW)
-	gcloud projects create judgeless-testing-$(NEXT)
-	gcloud alpha billing projects link judgeless-testing-$(NEXT) --billing-account=$(BILLING_ACCOUNT)
-	
-	sed -i 's/judgeless-testing-$(NOW)/judgeless-testing-$(NEXT)/g' ./bootstrap/terraform.tfvars
-	sed -i 's/judgeless-test-$(NOW)/judgeless-test-$(NEXT)/g' ./bootstrap/terraform.tfvars
-
-	make clean
-
-.PHONY: bootstrap prep-inception inception prep-platform platform clean recreate-project
+.PHONY: bootstrap prep-inception inception prep-platform platform prep-services initial-services services clean

@@ -40,6 +40,8 @@ resource "google_project_iam_custom_role" "bootstrap" {
     "storage.buckets.delete",
     "resourcemanager.projects.getIamPolicy",
     "resourcemanager.projects.setIamPolicy",
+    "firebase.clients.get",
+    "firebase.clients.create",
   ]
 }
 

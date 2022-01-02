@@ -20,3 +20,13 @@ output "cluster_endpoint" {
 output "cluster_ca_cert" {
   value = module.platform.cluster_ca_cert
 }
+output "pg_host" {
+  value = module.platform.pg_host
+}
+output "pg_admin_username" {
+  value = module.platform.pg_admin_username
+}
+output "pg_admin_password" {
+  value     = module.platform.pg_admin_password
+  sensitive = true
+}

@@ -22,15 +22,15 @@ output "lnd2_ip" {
   value = google_compute_address.lnd2.address
 }
 
-output "shared_pg_host" {
+output "pg_host" {
   value = google_sql_database_instance.instance.private_ip_address
 }
 
-output "shared_pg_admin_username" {
+output "pg_admin_username" {
   value = google_sql_user.admin.name
 }
 
-output "shared_pg_admin_password" {
+output "pg_admin_password" {
   value     = random_password.admin.result
   sensitive = true
 }
