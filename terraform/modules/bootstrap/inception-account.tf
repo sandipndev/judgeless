@@ -20,6 +20,7 @@ resource "google_project_iam_custom_role" "bootstrap" {
     "iam.serviceAccounts.get",
     "iam.serviceAccounts.getIamPolicy",
     "iam.serviceAccounts.setIamPolicy",
+    "iam.serviceAccountKeys.create",
     "compute.instances.getIamPolicy",
     "compute.instances.setIamPolicy",
     "iam.roles.create",

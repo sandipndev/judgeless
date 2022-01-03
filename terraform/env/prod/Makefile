@@ -36,6 +36,6 @@ clean:
 	find . | grep terra | grep -v "./bootstrap/terraform.tfvars" | xargs rm -rf
 	find . | grep tfstate | grep -v "./bootstrap/terraform.tfvars" | xargs rm -rf
 	find . | grep tfvars | grep -v "./bootstrap/terraform.tfvars" | xargs rm -rf
-	rm id_rsa id_rsa.pub inception-sa-creds.json
+	rm id_rsa id_rsa.pub inception-sa-creds.json gcr-sa-creds.json
 
 .PHONY: bootstrap prep-inception inception prep-platform platform prep-services initial-services services clean

@@ -31,6 +31,9 @@ make bootstrap
 # To get gcr_push SA Credentials
 eval "gcloud iam service-accounts keys create gcr-sa-creds.json --iam-account=$(cd bootstrap && terraform output gcr_push_sa)"
 
+# To get inception SA Credentials
+eval "gcloud iam service-accounts keys create inception-sa-creds.json --iam-account=$(cd bootstrap && terraform output inception_sa)"
+
 # Inception Phase
 # Users mentioned here get access to inception, platform, logs
 make prep-inception USERS='["user:email@gmail.com",...]'
