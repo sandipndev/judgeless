@@ -2,18 +2,17 @@ name: Build & Push to GCR
 on:
   push:
     branches: [main]
-    paths-ignore:
-      - ".github/**"
-      - "terraform/**"
-      - "charts/**"
-      - "scripts/**"
-      - ".env.local.example"
-      - ".gitignore"
-      - "docker-compose.yml"
-      - "Makefile"
-      - "README.md"
     paths:
       - "scripts/startup.sh"
+      - "!.github/**"
+      - "!terraform/**"
+      - "!charts/**"
+      - "!scripts/**"
+      - "!.env.local.example"
+      - "!.gitignore"
+      - "!docker-compose.yml"
+      - "!Makefile"
+      - "!README.md"
   workflow_dispatch:
 
 jobs:
