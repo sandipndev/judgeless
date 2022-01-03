@@ -1,18 +1,16 @@
-name: Build & Push to GCR
+name: Build, Push and Deploy
 on:
   push:
     branches: [main]
-    paths:
-      - "scripts/startup.sh"
-      - "!.github/**"
-      - "!terraform/**"
-      - "!charts/**"
-      - "!scripts/**"
-      - "!.env.local.example"
-      - "!.gitignore"
-      - "!docker-compose.yml"
-      - "!Makefile"
-      - "!README.md"
+    paths_ignore:
+      - "terraform/**"
+      - "charts/**"
+      - "scripts/**"
+      - ".env.local.example"
+      - ".gitignore"
+      - "docker-compose.yml"
+      - "Makefile"
+      - "README.md"
   workflow_dispatch:
 
 jobs:
@@ -70,3 +68,47 @@ jobs:
         run: |
           gcloud auth configure-docker -q
           docker push us.gcr.io/$PROJECT_ID/$SERVICE_NAME:latest
+  
+  # Same as deploy.yml
+  deploy:
+    name: Prod Deployment
+    runs-on: ubuntu-latest
+    needs: [ build ]
+
+    env:
+      GOOGLE_CREDENTIALS: ${{ secrets.INCEPTION_SA_CREDS }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Bootstrap
+        run: |
+          cd terraform/env/prod
+
+          cat <<EOF > bootstrap/terraform.tfvars
+          gcp_project = "${{ secrets.GCP_PROJECT }}"
+          name_prefix = "${{ secrets.NAME_PREFIX }}"
+          EOF
+
+          pushd bootstrap
+          terraform init
+          terraform refresh
+          popd
+
+          make prep-inception USERS=${{ secrets.USERS_ARRAY }} INCEPTION_EMAIL=${{ secrets.INCEPTION_EMAIL }}
+
+      - name: Inception
+        run: |
+          cd terraform/env/prod
+          echo yes | make inception
+
+      - name: Platform
+        run: |
+          cd terraform/env/prod
+          echo yes | make prep-platform
+          echo yes | make platform
+
+      - name: Services
+        run: |
+          cd terraform/env/prod
+          echo yes | make services
