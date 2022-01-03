@@ -21,10 +21,15 @@ In such a situation, the rollout must be in stages, with code flowing from GitHu
 
 #### Environment rollout procedure TL;DR
 
+Create a Firebase Project and upgrade to Blaze (Pay as you go) plan or a higher plan. Add a `terraform.tfvars` file at [./bootstrap](./bootstrap/) with `gcp_project` and `name_prefix` variables.
+
 ```bash
 # Bootstrap phase - Run once, locally
 gcloud auth application-default login
 make bootstrap
+
+# To get gcr_push SA Credentials
+eval "gcloud iam service-accounts keys create gcr-sa-creds.json --iam-account=$(cd bootstrap && terraform output gcr_push_sa)"
 
 # Inception Phase
 # Users mentioned here get access to inception, platform, logs

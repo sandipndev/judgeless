@@ -45,7 +45,8 @@ terraform.tf
 # Ignore User list
 users.auto.tfvars.json
 
-# Inception Credentials
+# SA Credentials
+gcr-sa-creds.json
 inception-sa-creds.json
 
 # Server Keys

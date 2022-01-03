@@ -16,7 +16,7 @@ name_prefix=$(terraform output name_prefix | jq -r)
 
 popd
 
-if [[ $GOOGLE_CREDENTIALS == "" ]]; then
+if [ -z ${GOOGLE_CREDENTIALS+x} ]; then
   gcloud iam service-accounts keys create inception-sa-creds.json \
   --iam-account=${inception_email}
 

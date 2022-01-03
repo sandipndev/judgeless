@@ -25,3 +25,6 @@ output "tf_state_bucket_name" {
 output "tf_state_bucket_location" {
   value = module.bootstrap.tf_state_bucket_location
 }
+output "gcr_push_sa" {
+  value = module.bootstrap.gcr_push_sa
+}

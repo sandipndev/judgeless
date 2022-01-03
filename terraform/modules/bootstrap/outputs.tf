@@ -13,3 +13,6 @@ output "tf_state_bucket_name" {
 output "tf_state_bucket_location" {
   value = google_storage_bucket.tf_state.location
 }
+output "gcr_push_sa" {
+  value = google_service_account.gcr_push.email
+}
