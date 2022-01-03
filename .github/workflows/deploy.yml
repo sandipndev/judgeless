@@ -1,0 +1,52 @@
+name: Prod Deployment
+on: 
+  push:
+    branches: [main]
+    paths:
+      - "terraform/**"
+      - "charts/**"
+      - "scripts/**"
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Prod Deployment
+    runs-on: ubuntu-latest
+
+    env:
+      GOOGLE_CREDENTIALS: ${{ secrets.INCEPTION_SA_CREDS }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Bootstrap
+        run: |
+          cd terraform/env/prod
+
+          cat <<EOF > bootstrap/terraform.tfvars
+          gcp_project = "${{ secrets.GCP_PROJECT }}"
+          name_prefix = "${{ secrets.NAME_PREFIX }}"
+          EOF
+
+          pushd bootstrap
+          terraform init
+          terraform refresh
+          popd
+
+          make prep-inception USERS=${{ secrets.USERS_ARRAY }} INCEPTION_EMAIL=${{ secrets.INCEPTION_EMAIL }}
+
+      - name: Inception
+        run: |
+          cd terraform/env/prod
+          echo yes | make inception
+
+      - name: Platform
+        run: |
+          cd terraform/env/prod
+          echo yes | make prep-platform
+          echo yes | make platform
+
+      - name: Services
+        run: |
+          cd terraform/env/prod
+          echo yes | make services

@@ -58,6 +58,12 @@ if ! [[ -f id_rsa ]]; then
   ssh-keygen -b 4096 -t rsa -f $(pwd)/id_rsa -q -N ""
 fi
 
+if ! [[ -f inception-sa-creds.json ]]; then
+cat <<EOF >inception-sa-creds.json
+${GOOGLE_CREDENTIALS}
+EOF
+fi
+
 gcloud auth activate-service-account --key-file=$(pwd)/inception-sa-creds.json
 gcloud compute os-login ssh-keys add --key-file=$(pwd)/id_rsa.pub --project=${gcp_project}
 gcloud auth revoke
