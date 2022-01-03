@@ -1,3 +1,4 @@
+variable "gcp_project" {}
 variable "name_prefix" {}
 variable "cluster_endpoint" {}
 variable "cluster_ca_cert" {}
@@ -9,6 +10,7 @@ variable "pg_admin_username" {}
 variable "pg_admin_password" {}
 
 locals {
+  gcp_project              = var.gcp_project
   name_prefix              = var.name_prefix
   cluster_endpoint         = var.cluster_endpoint
   cluster_ca_cert          = var.cluster_ca_cert

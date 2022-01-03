@@ -64,9 +64,9 @@ jobs:
 
           EOF
 
-          docker build -t us.gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA .
+          docker build -t us.gcr.io/$PROJECT_ID/$SERVICE_NAME:latest .
 
       - name: Push
         run: |
           gcloud auth configure-docker -q
-          docker push us.gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA
+          docker push us.gcr.io/$PROJECT_ID/$SERVICE_NAME:latest

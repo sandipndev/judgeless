@@ -1,0 +1,88 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "judgeless.fullname" . }}
+  labels:
+    app: {{ template "judgeless.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "judgeless.fullname" . }}
+      release: "{{ .Release.Name }}"
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        app: {{ template "judgeless.fullname" . }}
+        release: "{{ .Release.Name }}"
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+          env:
+            # Firebase Web App
+            - name: NEXT_PUBLIC_FIREBASE_PUBLIC_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: firebase-web-app-config
+                  key: api-key
+            - name: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+              valueFrom:
+                secretKeyRef:
+                  name: firebase-web-app-config
+                  key: auth-domain
+            - name: NEXT_PUBLIC_FIREBASE_DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: firebase-web-app-config
+                  key: database-url
+            - name: NEXT_PUBLIC_FIREBASE_PROJECT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: firebase-web-app-config
+                  key: project-id
+            
+            # Firebase Admin
+            - name: FIREBASE_CLIENT_EMAIL
+              valueFrom:
+                secretKeyRef:
+                  name: firebase-admin-config
+                  key: sa-email
+            - name: FIREBASE_PRIVATE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: firebase-admin-config
+                  key: sa-private-key
+
+            # Cookie Secrets
+            - name: COOKIE_SECRET_CURRENT
+              valueFrom:
+                secretKeyRef:
+                  name: cookie-secret
+                  key: current
+            - name: COOKIE_SECRET_PREVIOUS
+              valueFrom:
+                secretKeyRef:
+                  name: cookie-secret
+                  key: previous
+            
+            # Cookie options
+            - name: NEXT_PUBLIC_COOKIE_SECURE
+              value: "true"
+            
+            # Database URL
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-creds
+                  key: database-url
