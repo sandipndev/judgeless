@@ -61,10 +61,10 @@ resource "postgresql_grant" "grant_all_judgeless" {
 
 resource "kubernetes_secret" "postgres_creds" {
   metadata {
-    name = "judgeless-postgres"
+    name = "postgres-creds"
   }
 
   data = {
-    "DATABASE_URL" = "postgres://${local.judgeless_pg_user}:${random_password.judgeless_pg_password.result}@${local.pg_host}:5432/${local.judgeless_pg_dbname}"
+    database-url = "postgres://${local.judgeless_pg_user}:${random_password.judgeless_pg_password.result}@${local.pg_host}:5432/${local.judgeless_pg_dbname}"
   }
 }
