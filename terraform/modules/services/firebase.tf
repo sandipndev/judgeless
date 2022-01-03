@@ -9,22 +9,6 @@ resource "google_service_account" "fb_admin" {
   description  = "Firebase Admin Account of ${local.name_prefix}"
 }
 
-resource "google_project_iam_custom_role" "fb_admin_key_get" {
-  project     = local.gcp_project
-  role_id     = replace("${local.name_prefix}-fb-admin-key-get", "-", "_")
-  title       = "Get SA Keys"
-  description = "Role for fetching SA Keys for ${local.name_prefix}"
-  permissions = [
-    "iam.serviceAccountKeys.get"
-  ]
-}
-
-resource "google_project_iam_member" "fb_admin_key_get" {
-  project = local.gcp_project
-  role    = google_project_iam_custom_role.fb_admin_key_get.id
-  member  = "serviceAccount:${google_service_account.fb_admin.email}"
-}
-
 resource "google_project_iam_member" "fb_admin" {
   project = local.gcp_project
   role    = "roles/firebase.admin"
@@ -36,8 +20,7 @@ resource "google_service_account_key" "fb_admin_key" {
   public_key_type    = "TYPE_X509_PEM_FILE"
 
   depends_on = [
-    google_project_iam_member.fb_admin,
-    google_project_iam_member.fb_admin_key_get
+    google_project_iam_member.fb_admin
   ]
 }
 

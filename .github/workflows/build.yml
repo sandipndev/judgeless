@@ -2,7 +2,7 @@ name: Build, Push and Deploy
 on:
   push:
     branches: [main]
-    paths_ignore:
+    paths-ignore:
       - ".github/**"
       - "terraform/**"
       - "charts/**"
