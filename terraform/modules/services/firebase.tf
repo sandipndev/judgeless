@@ -24,6 +24,11 @@ resource "google_service_account_key" "fb_admin_key" {
   ]
 }
 
+locals {
+  fb_admin_sa_json_ns = nonsensitive(base64decode(google_service_account_key.fb_admin_key.private_key))
+  fb_admin_sa_pkey_s  = sensitive(jsondecode(local.fb_admin_sa_json_ns)["private_key"])
+}
+
 resource "kubernetes_secret" "fb_admin_creds" {
   metadata {
     name = "firebase-admin-config"
@@ -31,7 +36,7 @@ resource "kubernetes_secret" "fb_admin_creds" {
 
   data = {
     sa-email       = google_service_account.fb_admin.email
-    sa-private-key = base64decode(google_service_account_key.fb_admin_key.private_key)
+    sa-private-key = local.fb_admin_sa_pkey_s
   }
 }
 
