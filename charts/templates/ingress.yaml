@@ -20,7 +20,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: {{ template "judgeless.fullname" . }}
+                name: {{ include "judgeless.fullname" $ }}
                 port:
                   number: {{ $.Values.service.port }}
     {{- end }}

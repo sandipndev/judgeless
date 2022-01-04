@@ -28,6 +28,7 @@ resource "helm_release" "judgeless" {
     templatefile("${path.module}/judgeless-values.yml.tmpl", {
       PROJECT_ID : local.gcp_project
       SERVICE_NAME : local.name_prefix
+      HOST: local.host
       TRIGGER_TIME : timestamp()
     })
   ]

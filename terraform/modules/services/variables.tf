@@ -5,6 +5,7 @@ variable "cluster_ca_cert" {}
 variable "ingress_nginx_version" { default = "4.0.6" }
 variable "cert_manager_version" { default = "v1.5.3" }
 variable "letsencrypt_issuer_email" {}
+variable "host" { default = "judgeless.co" }
 variable "pg_host" {}
 variable "pg_admin_username" {}
 variable "pg_admin_password" {}
@@ -18,6 +19,7 @@ locals {
   ingress_nginx_version    = var.ingress_nginx_version
   cert_manager_version     = var.cert_manager_version
   letsencrypt_issuer_email = var.letsencrypt_issuer_email
+  host = var.host
 
   pg_host             = var.pg_host
   pg_admin_username   = var.pg_admin_username
