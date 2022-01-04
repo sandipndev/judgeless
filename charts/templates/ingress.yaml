@@ -24,4 +24,10 @@ spec:
                 port:
                   number: {{ $.Values.service.port }}
     {{- end }}
+  tls:
+    {{- range .Values.ingress.hosts }}
+    - hosts:
+      - {{ . }}
+      secretName: {{ printf "%s-tls" . }}
+    {{- end }}
 {{- end }}

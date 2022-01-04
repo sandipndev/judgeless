@@ -41,3 +41,13 @@ module "services" {
   pg_admin_username        = var.pg_admin_username
   pg_admin_password        = var.pg_admin_password
 }
+
+output "web_app_api_key" {
+  value = module.services.web_app_api_key
+}
+output "web_app_auth_domain" {
+  value = module.services.web_app_auth_domain
+}
+output "web_app_database_url" {
+  value = module.services.web_app_database_url
+}
