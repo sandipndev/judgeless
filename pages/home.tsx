@@ -16,6 +16,7 @@ const Home: NextPage = () => {
         <div className="col-start-2 col-span-2">
           <PostsContextProvider>
             <CreatePost />
+            <div className="text-white font-mono font-bold text-xl">Posts</div>
             <Posts />
           </PostsContextProvider>
         </div>
