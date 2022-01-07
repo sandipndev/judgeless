@@ -24,12 +24,14 @@ resource "helm_release" "judgeless" {
   chart      = "${path.module}/../../../charts"
   repository = "https://sandipndev.github.io/judgeless/charts/"
 
+  force_update  = true
+  recreate_pods = true
+
   values = [
     templatefile("${path.module}/judgeless-values.yml.tmpl", {
       PROJECT_ID : local.gcp_project
       SERVICE_NAME : local.name_prefix
       HOST: local.host
-      TRIGGER_TIME : timestamp()
     })
   ]
 
