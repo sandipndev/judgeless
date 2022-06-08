@@ -1,6 +1,5 @@
 import type { NextPage } from "next"
 import React, { useContext, useRef, useState } from "react"
-import { useAuthUser } from "next-firebase-auth";
 import { FiSend } from "react-icons/fi"
 
 import { PostsContext } from "../context/posts";
@@ -16,7 +15,6 @@ type CreatePostProps = {
 }
 
 const CreatePost: NextPage<CreatePostProps> = ({ className = "" }) => {
-  const user = useAuthUser();
   const [_, setPosts] = useContext(PostsContext);
   const [error, setError] = useState<string>("");
 
@@ -42,7 +40,7 @@ const CreatePost: NextPage<CreatePostProps> = ({ className = "" }) => {
     const newPostResponse = await fetch("/api/post/create", {
       method: "POST",
       headers: {
-        authorization: await user.getIdToken() || "No Auth",
+        authorization: "No Auth",
         "Content-Type": "application/json"
       },
       body: JSON.stringify(post)

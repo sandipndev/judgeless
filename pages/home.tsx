@@ -1,5 +1,4 @@
 import type { NextPage } from 'next'
-import { withAuthUser, AuthAction } from 'next-firebase-auth'
 
 import FullPageLoader from '../components/FullPageLoader'
 import CreatePost from '../components/CreatePost'
@@ -28,8 +27,4 @@ const Home: NextPage = () => {
   )
 }
 
-export default withAuthUser({
-  LoaderComponent: FullPageLoader,
-  whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN,
-  whenUnauthedBeforeInit: AuthAction.SHOW_LOADER,
-})(Home)
+export default Home

@@ -1,6 +1,5 @@
 import type { NextPage } from 'next'
 import Image from 'next/image'
-import { withAuthUser, AuthAction, withAuthUserTokenSSR } from 'next-firebase-auth'
 
 import firebase from 'firebase/app'
 import 'firebase/auth'
@@ -26,11 +25,4 @@ const Home: NextPage = () => {
   )
 }
 
-export const getServerSideProps = withAuthUserTokenSSR()()
-
-export default withAuthUser({
-  LoaderComponent: FullPageLoader,
-  whenAuthed: AuthAction.REDIRECT_TO_APP,
-  whenUnauthedBeforeInit: AuthAction.SHOW_LOADER,
-  whenUnauthedAfterInit: AuthAction.RENDER,
-})(Home)
+export default Home

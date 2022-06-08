@@ -1,13 +1,16 @@
 import type { NextPage } from "next"
 import Image from 'next/image'
 import { useState } from "react"
-import { useAuthUser } from "next-firebase-auth"
 
 import Logo from "../public/logo-animated.gif"
 
 const ProfileHeader: NextPage = () => {
   const [showProfileMenu, setShowProfileMenu] = useState<boolean>(false);
-  const user = useAuthUser()
+  const user = {
+    photoURL: "",
+    displayName: "",
+    signOut: () => {}
+  }
 
   return (
     <>
