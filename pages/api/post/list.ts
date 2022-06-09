@@ -30,7 +30,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       },
       orderBy: [{ createdAt: "desc" }],
       take: 10,
-      skip: req.body && req.body.skip ? Number(req.body.skip) : 0,
+      skip: req.query && req.query.skip ? Number(req.query.skip) : 0,
     });
 
     const anonFilteredResults = result.map((p) => {
