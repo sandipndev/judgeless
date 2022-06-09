@@ -23,7 +23,11 @@ const Posts: NextPage<PostsProps> = () => {
     setPosts(p);
   }, [user, setPosts]);
 
-  useEffect(() => { if (user) getAndSetPosts() }, [user, getAndSetPosts]);
+  useEffect(() => {
+    if (user) getAndSetPosts()
+    const i = setInterval(() => getAndSetPosts(), 5000);
+    return () => clearInterval(i);
+  }, [user, getAndSetPosts]);
 
   return (
     <>
