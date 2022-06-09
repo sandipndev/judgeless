@@ -1,8 +1,8 @@
 import type { NextPage } from "next"
-import { useAuthUser } from "next-firebase-auth";
 import { useCallback, useContext, useEffect } from "react"
 
 import { PostsContext } from "../context/posts";
+import { UserContext } from "../context/user";
 import type { PostProps } from "./Post";
 import Post from "./Post";
 
@@ -11,19 +11,19 @@ type PostsProps = {
 }
 
 const Posts: NextPage<PostsProps> = () => {
+  const [user, _] = useContext(UserContext);
   const [posts, setPosts] = useContext(PostsContext);
-  const user = useAuthUser();
 
   const getAndSetPosts = useCallback(async () => {
     const p = await fetch("/api/post/list", {
       headers: {
-        authorization: await user.getIdToken() || "No Auth",
+        authorization: await user!.getIdToken(),
       }
     }).then(r => r.json());
     setPosts(p);
   }, [user, setPosts]);
 
-  useEffect(() => { getAndSetPosts() }, [getAndSetPosts]);
+  useEffect(() => { if (user) getAndSetPosts() }, [user, getAndSetPosts]);
 
   return (
     <>
