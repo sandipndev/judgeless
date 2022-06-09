@@ -2,7 +2,7 @@ import { useCallback, useContext, useEffect, useState } from 'react'
 import type { NextPage } from 'next'
 import Image from 'next/image'
 
-import { getAuth, signInWithRedirect, getRedirectResult, GoogleAuthProvider} from 'firebase/auth'
+import { getAuth, signInWithRedirect, getRedirectResult, GoogleAuthProvider } from 'firebase/auth'
 
 import Quote from '../components/Quote'
 import Logo from "../public/logo-animated.gif"

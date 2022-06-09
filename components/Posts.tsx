@@ -2,6 +2,7 @@ import type { NextPage } from "next"
 import { useCallback, useContext, useEffect } from "react"
 
 import { PostsContext } from "../context/posts";
+import { UserContext } from "../context/user";
 import type { PostProps } from "./Post";
 import Post from "./Post";
 
@@ -10,18 +11,19 @@ type PostsProps = {
 }
 
 const Posts: NextPage<PostsProps> = () => {
+  const [user, _] = useContext(UserContext);
   const [posts, setPosts] = useContext(PostsContext);
 
   const getAndSetPosts = useCallback(async () => {
     const p = await fetch("/api/post/list", {
       headers: {
-        authorization: "No Auth",
+        authorization: await user!.getIdToken(),
       }
     }).then(r => r.json());
     setPosts(p);
-  }, [setPosts]);
+  }, [user, setPosts]);
 
-  useEffect(() => { getAndSetPosts() }, [getAndSetPosts]);
+  useEffect(() => { if (user) getAndSetPosts() }, [user, getAndSetPosts]);
 
   return (
     <>

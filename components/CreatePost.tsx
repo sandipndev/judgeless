@@ -3,6 +3,7 @@ import React, { useContext, useRef, useState } from "react"
 import { FiSend } from "react-icons/fi"
 
 import { PostsContext } from "../context/posts";
+import { UserContext } from "../context/user";
 import Loader from "./Loader";
 
 type Post = {
@@ -16,6 +17,8 @@ type CreatePostProps = {
 
 const CreatePost: NextPage<CreatePostProps> = ({ className = "" }) => {
   const [_, setPosts] = useContext(PostsContext);
+  const [user, __] = useContext(UserContext);
+
   const [error, setError] = useState<string>("");
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -40,7 +43,7 @@ const CreatePost: NextPage<CreatePostProps> = ({ className = "" }) => {
     const newPostResponse = await fetch("/api/post/create", {
       method: "POST",
       headers: {
-        authorization: "No Auth",
+        authorization: await user!.getIdToken(),
         "Content-Type": "application/json"
       },
       body: JSON.stringify(post)
