@@ -2,9 +2,6 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient } from "@prisma/client";
 import getUser from "../../../utils/getUser";
 
-import initAuth from "../../../utils/initAuth";
-initAuth();
-
 export const commons = {
   id: true,
   body: true,

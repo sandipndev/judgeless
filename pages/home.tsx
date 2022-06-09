@@ -1,12 +1,20 @@
 import type { NextPage } from 'next'
+import { useContext, useEffect } from 'react'
 
-import FullPageLoader from '../components/FullPageLoader'
 import CreatePost from '../components/CreatePost'
 import ProfileHeader from '../components/ProfileHeader'
 import Posts from '../components/Posts'
 import PostsContextProvider from '../context/posts'
+import { UserContext } from '../context/user'
+import { useRouter } from 'next/router'
 
 const Home: NextPage = () => {
+  const router = useRouter();
+  const [user, _] = useContext(UserContext);
+
+  useEffect(() => {
+    if (!user) router.replace("/");
+  }, [user])
 
   return (
     <div className="relative">

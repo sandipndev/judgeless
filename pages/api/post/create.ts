@@ -3,9 +3,7 @@ import { PrismaClient } from "@prisma/client";
 import getUser from "../../../utils/getUser";
 import validate from "../../../validators/post/create";
 
-import initAuth from "../../../utils/initAuth";
 import { commons } from "./list";
-initAuth();
 
 const client = new PrismaClient();
 
