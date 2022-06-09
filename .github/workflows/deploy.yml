@@ -1,11 +1,5 @@
 name: Prod Deployment
-on: 
-  push:
-    branches: [main]
-    paths:
-      - "terraform/**"
-      - "charts/**"
-      - "scripts/**"
+on:
   workflow_dispatch:
 
 jobs:
