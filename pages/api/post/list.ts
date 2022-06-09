@@ -29,7 +29,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         },
       },
       orderBy: [{ createdAt: "desc" }],
-      take: 10,
+      take: req.query && req.query.all == "1" ? undefined : 10,
       skip: req.query && req.query.skip ? Number(req.query.skip) : 0,
     });
 

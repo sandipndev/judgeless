@@ -15,7 +15,7 @@ const Posts: NextPage<PostsProps> = () => {
   const [posts, setPosts] = useContext(PostsContext);
 
   const getAndSetPosts = useCallback(async () => {
-    const p = await fetch("/api/post/list", {
+    const p = await fetch("/api/post/list?all=1", {
       headers: {
         authorization: await user!.getIdToken(),
       }
